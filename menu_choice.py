@@ -54,8 +54,8 @@ menue_df.columns = ["id", "Food"]
 # 食事時マスター
 shift_df = pd.DataFrame(
     [
-        [0, 1],
-        ["昼", "夜"]
+        [0],
+        ["昼"]
     ],
 ).T
 shift_df.columns = ["id", "Shift"]
