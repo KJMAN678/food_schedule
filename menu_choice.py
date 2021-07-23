@@ -1,24 +1,39 @@
 import numpy as np
 import pandas as pd
+from datetime import datetime, date, timedelta
 import pywebio
-from pywebio.input import select, checkbox, radio, textarea, input_group
-from pywebio.output import put_table
+from pywebio.input import select, checkbox, textarea, input_group
+from pywebio.output import put_table, put_text, put_scrollable, output
 from ortools.sat.python import cp_model
 
 ##### Web画面からの入力 ######
 
+today = datetime.today() # 今日の日付
+seven_days_later = today + timedelta(days=7) # 7日後
+
 result = input_group(
-  "入力グループ",
+  "こち亀の両さんの昼食のローテーションを決めてあげるアプリ",
   [
-    textarea('日付 FROM', rows=1, placeholder='yyyy/mm/dd', name="from"), # 日付 ～から
-    textarea('日付 TO', rows=1, placeholder='yyyy/mm/dd', name="to"), # 日付 ～まで
+    textarea('日付 FROM', # 日付 ～から 
+          rows=1,
+          value=datetime.strftime(today, '%Y-%m-%d'),  # 今日の日付(サンプル)
+          placeholder='yyyy/mm/dd', 
+          name="from"),
+
+    textarea('日付 TO', # 日付 ～まで 
+          rows=1, 
+          value=datetime.strftime(seven_days_later, '%Y-%m-%d'), # 7日後の日付(サンプル)
+          placeholder='yyyy/mm/dd', 
+          name="to"),
 
     checkbox("メニュー",  # メニュー
             options=['カレー', 'ラーメン', '焼きそば'],
+            value=['カレー', 'ラーメン', '焼きそば'],
              name="menu"),
 
     checkbox("曜日",  # スケジュールをたてる曜日
             options=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            value=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
              name="dayOfWeek"),
   ]
 )
@@ -27,19 +42,19 @@ result = input_group(
 
 # 日付マスター
 time_range_list = pd.date_range(start=result["from"], end=result["to"])
-  
 
 days_df = pd.DataFrame(
     [
-      [*range(len(time_range_list))], # index 
       [*time_range_list] # 選択した日付のFROMからTOまで
     ],
 ).T
-days_df.columns = ["id", "Days"]
-days_df["Days"] = pd.to_datetime(days_df["Days"], format='%Y%m%d') # 時間が表示されないよう修正
-days_df["DayOfTheWeek"] = days_df["Days"].dt.strftime('%a') # 曜日を取得
+days_df.columns = ["Days"]
+days_df["dayOfWeek"] = days_df["Days"].dt.strftime('%a') # 曜日を取得
 days_df["Days"] = days_df["Days"].astype(str) # 表に年月日だけ表示されるように文字列に変換
-days_df[days_df["DayOfTheWeek"].isin(result["dayOfWeek"])].reset_index(drop=True) # 曜日の絞り込み
+days_df = days_df[days_df["dayOfWeek"].isin(result["dayOfWeek"])].reset_index(drop=True) # 曜日の絞り込み
+days_df = days_df[days_df["dayOfWeek"].isin(result["dayOfWeek"])].reset_index()
+days_df.columns = ["id", "Days", "dayOfWeek"]
+
 
 # メニューマスター
 menue_df = pd.DataFrame(
@@ -183,12 +198,26 @@ plan_df = pd.merge(plan_df, menue_df, left_on="MenueId", right_on="id", how='lef
 # いつ食べるか（シフト）
 plan_df = pd.merge(plan_df, shift_df, left_on="ShiftId", right_on="id", how='left').drop(columns='id')
 
-plan_df = plan_df[["Days", "DayOfTheWeek", "Shift", "Food"]]
+plan_df = plan_df[["Days", "dayOfWeek", "Shift", "Food"]]
 plan_df.columns = ["日付", "曜日", "いつ", "メニュー"]
 
 ##### Web画面へのアウトプット ######
 
-put_table(
-  plan_df.values.tolist(),
-  header=plan_df.columns.tolist(),
-)
+title = output(put_text("両さんの昼食ローテーション"))
+columns = output(put_table(np.array(plan_df.columns).reshape(1, -1).tolist()))
+tables = output(put_scrollable(put_table(plan_df.values.tolist()), height=300, keep_bottom=True))  # equal to output('Coding')
+
+# 食べたメニューの数
+count = plan_df["メニュー"].value_counts().reset_index()
+count.columns = ["メニュー", "数量"]
+count_table = put_table(count.values.tolist(), header=list(count.columns))
+
+put_table([
+   [title],
+   [columns],
+   [tables],
+   [count_table]
+])
+
+
+
