@@ -6,11 +6,11 @@
 
 ただでさえ少ないバリエーション（カレー、ラーメン、焼きそば）をさらに狭めることも可能！  
 
-<img width="730" alt="2021-07-22_22h13_12" src="https://user-images.githubusercontent.com/45703844/126647750-511c0c6c-e647-4b7e-96d1-3c74e5d8cc39.png">
+<img width="682" alt="2021-07-23_11h12_12" src="https://user-images.githubusercontent.com/45703844/126730081-999de7de-b0b3-454f-a521-3ee5102ac3a9.png">
 
 重複しないように、偏らないように数理最適化を無駄遣いするぞ！  
 
-<img width="730" alt="2021-07-22_22h37_21" src="https://user-images.githubusercontent.com/45703844/126648201-39c29c60-ecf6-4c62-9ad0-25934ee55358.png">
+<img width="355" alt="2021-07-23_11h11_48" src="https://user-images.githubusercontent.com/45703844/126730133-fc4a8ce6-7910-4b6d-915f-3c569b67acb4.png">
 
 * 両さんの昼食はカレー、ラーメン、ヤキソバの繰り返し
  こちら葛飾区亀有公園前派出所 第84巻の第2話「現代昼食事情の巻」より  
