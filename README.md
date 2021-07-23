@@ -19,5 +19,9 @@
 数理最適化には or-tools を使っています  
 https://developers.google.com/optimization
 
-Webアプリ作成には PyWebIO を使っています  
+Webアプリ作成には PyWebIO と一部 Flask を使っています  
 https://pywebio.readthedocs.io/en/latest/index.html
+
+デプロイ周りについては下記のYouTube、GitHubを参考にしました  
+https://www.youtube.com/watch?v=sqR154NkwZk
+https://github.com/krishnaik06/Pywebheroku
