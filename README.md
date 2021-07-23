@@ -14,6 +14,7 @@
 
 * 両さんの昼食はカレー、ラーメン、ヤキソバの繰り返し
  こちら葛飾区亀有公園前派出所 第84巻の第2話「現代昼食事情の巻」より  
+ https://igmonostone.com/kochikame-84_lifehack/
  
 数理最適化には or-tools を使っています  
 https://developers.google.com/optimization
