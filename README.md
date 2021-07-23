@@ -23,5 +23,5 @@ Webアプリ作成には PyWebIO と一部 Flask を使っています
 https://pywebio.readthedocs.io/en/latest/index.html
 
 デプロイ周りについては下記のYouTube、GitHubを参考にしました  
-https://www.youtube.com/watch?v=sqR154NkwZk
-https://github.com/krishnaik06/Pywebheroku
+https://www.youtube.com/watch?v=sqR154NkwZk  
+https://github.com/krishnaik06/Pywebheroku  
