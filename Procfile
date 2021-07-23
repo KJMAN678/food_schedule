@@ -1,1 +1,1 @@
-web: python menu_choice.py 
+web: gunicorn menu_choice:app --log-file -
