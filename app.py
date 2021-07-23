@@ -224,18 +224,22 @@ def make_schedule():
     [count_table]
   ])
 
-# app.add_url_rule('/schedule', 'webio_view', webio_view(make_schedule),
-#             methods=['GET', 'POST', 'OPTIONS'])
+### デプロイ起動用
 
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument("-p", "--port", type=int, default=8080)
-#     args = parser.parse_args()
-
-#     start_server(make_schedule, port=args.port)
+app.add_url_rule('/schedule', 'webio_view', webio_view(make_schedule),
+            methods=['GET', 'POST', 'OPTIONS'])
 
 if __name__ == '__main__':
-    make_schedule()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p", "--port", type=int, default=8080)
+    args = parser.parse_args()
 
-app.run(host='localhost', port=80)
+    start_server(make_schedule, port=args.port)
+
+### ローカル起動用
+
+# if __name__ == '__main__':
+#     make_schedule()
+
+# app.run(host='localhost', port=80)
 
