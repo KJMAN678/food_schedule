@@ -1,5 +1,5 @@
-numpy
-pandas
-datetime
-pywebio
-ortools
+numpy==1.19.5
+pandas==1.15
+pywebio==1.3.3
+ortools==9.0.9048
+Flask==2.0.1
